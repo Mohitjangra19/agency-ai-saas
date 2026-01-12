@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Briefcase, TrendingUp, AlertCircle, Loader2 } from 'lucide-react';
+import { API_URL } from '../config';
 
 const DashboardCard = ({ title, value, icon, color }) => (
     <div className="bg-gray-900 border border-gray-800 p-6 rounded-xl hover:border-gray-700 transition-colors">
@@ -24,13 +25,13 @@ const Dashboard = () => {
     const fetchStats = async () => {
         try {
             // Parallel fetch possible, but keeping it simple
-            const clientsRes = await fetch('http://localhost:3000/api/clients');
+            const clientsRes = await fetch(`${API_URL}/api/clients`);
             const clientsData = await clientsRes.json();
 
-            const projectsRes = await fetch('http://localhost:3000/api/projects');
+            const projectsRes = await fetch(`${API_URL}/api/projects`);
             const projectsData = await projectsRes.json();
 
-            const tasksRes = await fetch('http://localhost:3000/api/tasks/pending-count');
+            const tasksRes = await fetch(`${API_URL}/api/tasks/pending-count`);
             const tasksData = await tasksRes.json();
 
             setStats({

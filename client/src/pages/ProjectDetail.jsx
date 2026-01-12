@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FileText, Plus, CheckCircle, Clock, Loader2, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { API_URL } from '../config';
 
 const ProjectDetail = () => {
     const { id } = useParams();
@@ -17,14 +18,14 @@ const ProjectDetail = () => {
 
     const fetchProjectData = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/projects');
+            const res = await fetch(`${API_URL}/api/projects`);
             const allProjects = await res.json();
             const p = allProjects.find(p => p.id === id);
             setProject(p);
 
             // Fetch real tasks
             if (p) {
-                const tasksRes = await fetch(`http://localhost:3000/api/tasks?project_id=${id}`);
+                const tasksRes = await fetch(`${API_URL}/api/tasks?project_id=${id}`);
                 const tasksData = await tasksRes.json();
                 setTasks(tasksData);
             }
@@ -45,7 +46,7 @@ const ProjectDetail = () => {
         ));
 
         try {
-            await fetch(`http://localhost:3000/api/tasks/${taskId}`, {
+            await fetch(`${API_URL}/api/tasks/${taskId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus })
@@ -64,7 +65,7 @@ const ProjectDetail = () => {
         if (!newTask.trim()) return;
 
         try {
-            const res = await fetch('http://localhost:3000/api/tasks', {
+            const res = await fetch(`${API_URL}/api/tasks`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -83,7 +84,7 @@ const ProjectDetail = () => {
     const generateContract = async () => {
         setGeneratingContract(true);
         try {
-            const response = await fetch('http://localhost:3000/api/generate-contract-content', {
+            const response = await fetch(`${API_URL}/api/generate-contract-content`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

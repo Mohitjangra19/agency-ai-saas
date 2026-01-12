@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Plus, Search, ExternalLink, Mail, Building2 } from 'lucide-react';
 import Modal from '../components/Modal';
+import { API_URL } from '../config';
 
 const Clients = () => {
     const [clients, setClients] = useState([]);
@@ -21,7 +22,7 @@ const Clients = () => {
 
     const fetchClients = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/clients');
+            const res = await fetch(`${API_URL}/api/clients`);
             const data = await res.json();
             setClients(data);
         } catch (error) {
@@ -34,7 +35,7 @@ const Clients = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:3000/api/clients', {
+            const res = await fetch(`${API_URL}/api/clients`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)

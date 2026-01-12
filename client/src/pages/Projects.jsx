@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, Plus, Calendar, DollarSign, User } from 'lucide-react';
+import { API_URL } from '../config';
 import Modal from '../components/Modal';
 
 const Projects = () => {
@@ -25,8 +26,8 @@ const Projects = () => {
     const fetchData = async () => {
         try {
             const [projectsRes, clientsRes] = await Promise.all([
-                fetch('http://localhost:3000/api/projects'),
-                fetch('http://localhost:3000/api/clients')
+                fetch(`${API_URL}/api/projects`),
+                fetch(`${API_URL}/api/clients`)
             ]);
             const projectsData = await projectsRes.json();
             const clientsData = await clientsRes.json();
@@ -42,7 +43,7 @@ const Projects = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:3000/api/projects', {
+            const res = await fetch(`${API_URL}/api/projects`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
@@ -88,13 +89,13 @@ const Projects = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map((project) => (
                         <div key={project.id} className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-500/50 transition-colors group cursor-pointer"
-                            onClick={() => window.location.href = `/projects/${project.id}`}>
+                            onClick={() => window.location.href = `/ projects / ${project.id} `}>
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{project.name}</h3>
-                                <span className={`px-2 py-1 text-xs rounded-full border ${project.status === 'completed' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
-                                        project.status === 'in-progress' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
-                                            'bg-gray-800 text-gray-400 border-gray-700'
-                                    }`}>
+                                <span className={`px - 2 py - 1 text - xs rounded - full border ${project.status === 'completed' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
+                                    project.status === 'in-progress' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                                        'bg-gray-800 text-gray-400 border-gray-700'
+                                    } `}>
                                     {project.status || 'pending'}
                                 </span>
                             </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BrainCircuit, Loader2, Calendar, AlertTriangle, CheckCircle } from 'lucide-react';
+import { BrainCircuit, Clock, AlertTriangle, Calendar, Loader2 } from 'lucide-react';
+import { API_URL } from '../config';
 
 const Timeline = () => {
     const [projectDesc, setProjectDesc] = useState('');
@@ -16,7 +17,7 @@ const Timeline = () => {
         const taskList = tasks.split('\n').filter(t => t.trim().length > 0);
 
         try {
-            const response = await fetch('http://localhost:3000/api/predict-timeline', {
+            const response = await fetch(`${API_URL}/api/predict-timeline`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -101,10 +102,10 @@ const Timeline = () => {
                         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-6 animate-in slide-in-from-right-4 duration-500">
                             <div className="flex justify-between items-start">
                                 <h3 className="text-xl font-semibold text-white">Analysis Result</h3>
-                                <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${prediction.riskFactor === 'High' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
+                                <span className={`px - 3 py - 1 rounded - full text - xs font - semibold border ${prediction.riskFactor === 'High' ? 'bg-red-500/10 text-red-400 border-red-500/20' :
                                         prediction.riskFactor === 'Medium' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
                                             'bg-green-500/10 text-green-400 border-green-500/20'
-                                    }`}>
+                                    } `}>
                                     {prediction.riskFactor} Risk
                                 </span>
                             </div>
