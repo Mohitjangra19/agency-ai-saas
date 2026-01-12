@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Briefcase, Plus, Calendar, DollarSign, User } from 'lucide-react';
 import { API_URL } from '../config';
 import Modal from '../components/Modal';
 
 const Projects = () => {
+    const navigate = useNavigate();
     const [projects, setProjects] = useState([]);
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -89,7 +91,7 @@ const Projects = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map((project) => (
                         <div key={project.id} className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-purple-500/50 transition-colors group cursor-pointer"
-                            onClick={() => window.location.href = `/ projects / ${project.id} `}>
+                            onClick={() => navigate(`/projects/${project.id}`)}>
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{project.name}</h3>
                                 <span className={`px - 2 py - 1 text - xs rounded - full border ${project.status === 'completed' ? 'bg-green-500/10 text-green-400 border-green-500/20' :
